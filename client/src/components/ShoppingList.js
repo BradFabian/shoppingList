@@ -37,7 +37,7 @@ class ShoppingList extends Component {
               <CSSTransition key={id} timeout={500} classNames="fade">
                 <ListGroupItem>
                   <Button
-                    classNames="remove-btn"
+                    className="remove-btn"
                     color="danger"
                     size="sm"
                     onClick={() => {
