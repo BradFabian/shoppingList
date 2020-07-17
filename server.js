@@ -8,9 +8,9 @@ const app = express();
 
 // Bodyparser Middleware
 app.use(bodyParser.json());
-const mongoConfig = process.env.MongoURI || "./config/keys" 
+
 // DB Config
-const db = require(mongoConfig).mongoURI;
+const db = require("./config/keys").mongoURI || process.env.mongoURI;
 //Connect to Mongo
 mongoose.set("useUnifiedTopology", true);
 mongoose
