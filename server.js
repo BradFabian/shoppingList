@@ -10,7 +10,7 @@ const app = express();
 app.use(bodyParser.json());
 //process.env.mongoURI || require("./config/keys").mongoURI//
 // DB Config
-const db = require("process.env").mongoURI;
+const db = process.env.mongoURI;
 //Connect to Mongo
 mongoose.set("useUnifiedTopology", true);
 mongoose
