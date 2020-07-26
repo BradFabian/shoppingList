@@ -4,12 +4,15 @@ const path = require("path");
 const items = require("./routes/api/items");
 const users = require("./routes/api/users");
 const app = express();
+const config = require("config");
 
 // Bodyparser Middleware
 app.use(express.json());
-// for Dev require("./config/dev").mongoURI//
+// for Production require("./config/keys").mongoURI//
+//for dev config.get('mongoURI') //
 // DB Config
-const db = require("./config/dev").mongoURI;
+
+const db = config.get('mongoURI');
 //Connect to Mongo
 mongoose.set("useUnifiedTopology", true);
 mongoose
