@@ -6,34 +6,27 @@ const jwt = require('jsonwebtoken');
 // User Model
 const User = require("../../models/User");
 
-// @route POST api/users
-// @desc Register new user
+// @route POST api/auth
+// @desc Auth user
 // @access Public
 
 router.post("/", (req, res) => {
-  const { name, email, password } = req.body;
+  const { email, password } = req.body;
 
   // simple validation
-  if (!name || !email || !password) {
+  if (!email || !password) {
     return res.status(400).json({ msg: "Please enter all fields" });
   }
 
   // Check for existing user
   User.findOne({ email }).then((user) => {
-    if (user) return res.status(400).json({ msg: "User already exists" });
-    const newUser = new User({
-      name,
-      email,
-      password,
-    });
-
-    // create salt & Hash
-    bcrypt.genSalt(10, (err, salt) => {
-      bcrypt.hash(newUser.password, salt, (err, hash) => {
-        if (err) throw err;
-        newUser.password = hash;
-        newUser.save().then((user) => {
-          jwt.sign({
+    if (!user) return res.status(400).json({ msg: "User does not exists" });
+   
+    // Validate password
+    bcrypt.compare(password, user.password).then(isMatch => {
+        if(!isMatch) return res.status(400).json({ msg: 'Invalid credentials'})
+        //if match send token //
+        jwt.sign({
             id: user.id
           },
           config.get('jwtSecret'),
@@ -50,10 +43,10 @@ router.post("/", (req, res) => {
             });
           }
           )
-         
-        });
-      });
-    });
+    })
+
+  
+    
   });
 });
 
