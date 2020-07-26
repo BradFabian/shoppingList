@@ -6,9 +6,9 @@ const Item = require("../../models/Item");
 
 // @route Get api/items
 // @desc GET ALL items
-// @access Public
+// @access Private
 
-router.get("/", (req, res) => {
+router.get("/", auth, (req, res) => {
   Item.find()
     .sort({ date: -1 })
     .then((items) => res.json(items));
@@ -16,7 +16,7 @@ router.get("/", (req, res) => {
 
 // @route Post api/items
 // @desc Create a item
-// @access Public
+// @access Private
 
 router.post("/", auth, (req, res) => {
   const newItem = Item({
@@ -28,7 +28,7 @@ router.post("/", auth, (req, res) => {
 
 // @route Delete api/items/:id
 // @desc Delete a item
-// @access Public
+// @access Private
 
 router.delete("/:id", auth, (req, res) => {
   Item.findById(req.params.id)
