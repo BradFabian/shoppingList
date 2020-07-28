@@ -8,7 +8,7 @@ const Item = require("../../models/Item");
 // @desc GET ALL items
 // @access Private
 
-router.get("/", auth, (req, res) => {
+router.get("/", (req, res) => {
   Item.find()
     .sort({ date: -1 })
     .then((items) => res.json(items));
